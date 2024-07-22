@@ -17,3 +17,16 @@ yarn playwright install
 sudo yarn playwright install-deps
 yarn createdevaccount
 cd ..
+
+wget https://github.com/WebAssembly/wabt/releases/download/1.0.35/wabt-1.0.35.tar.xz
+tar -xvf wabt-1.0.35.tar.xz
+cd wabt-1.0.35
+mkdir build
+cd build
+cmake ..
+sudo cmake --build . --target install
+
+wget https://github.com/WebAssembly/binaryen/releases/download/version_118/binaryen-version_118-x86_64-linux.tar.gz
+tar -xvzf binaryen-version_118-x86_64-linux.tar.gz 
+sudo cp -r binaryen-version_118/* /usr/
+rm -Rf binaryen-version_118*
