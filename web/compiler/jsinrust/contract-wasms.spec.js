@@ -3,15 +3,17 @@ import { getContractSimulationInstance, getJSEnvProperties, loadContractWasmInto
 import * as nearenv from "./wasm-near-environment.js";
 
 describe('contract-wasms', () => {
-    it('should get built-in properties of NFT contract', async () => {
+    it('should get built-in properties of NFT contract', async function() {
+        this.timeout(10000);
         await loadContractWasmIntoSimulator('nft');
         const properties = await getJSEnvProperties();
         expect(properties).to.include.members(["panic", "value_return", "input", "block_timestamp_ms", "current_account_id",
             "signer_account_id", "verify_signed_message", "store_signing_key", "base64_encode",
             "sha256_utf8_to_base64", "get_content_base64", "contract_owner", "nft_token", "nft_supply_for_owner", "nft_tokens"]);
-    }, 10000);
+    });
 
-    it('should get built-in properties of minimum-web4 contract', async () => {
+    it('should get built-in properties of minimum-web4 contract', async function() {
+        this.timeout(10000);
         await loadContractWasmIntoSimulator('minimum-web4');
         const properties = await getJSEnvProperties();
         expect(properties).to.include.members(["panic",
@@ -25,9 +27,10 @@ describe('contract-wasms', () => {
             "base64_encode",
             "sha256_utf8_to_base64",
             "get_content_base64"]);
-    }, 10000);
+    });
 
-    it('should simulate the NFT contract', async () => {
+    it('should simulate the NFT contract', async function() {
+        this.timeout(10000);
         await loadContractWasmIntoSimulator('nft');
         const instanceExports = await getContractSimulationInstance();
 
@@ -131,6 +134,5 @@ export function nft_payout() {
             .map(r => parseInt(r,16))
             )
         ));
-    }, 10000);
-
+    });
 });

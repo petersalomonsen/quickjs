@@ -30,3 +30,5 @@ wget https://github.com/WebAssembly/binaryen/releases/download/version_118/binar
 tar -xvzf binaryen-version_118-x86_64-linux.tar.gz 
 sudo cp -r binaryen-version_118/* /usr/
 rm -Rf binaryen-version_118*
+
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/near/near-cli-rs/releases/latest/download/near-cli-rs-installer.sh | sh

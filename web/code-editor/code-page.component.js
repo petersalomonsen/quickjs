@@ -1,10 +1,7 @@
 import './code-editor.component.js';
 import './args-editor.component.js';
-import { initNFTContract, deployJScontract, deployStandaloneContract, getSuggestedDepositForContract, isStandaloneMode, callStandaloneContract, createWalletConnection, byteArrayToBase64 } from '../near/near.js';
-import { createQuickJS } from '../compiler/quickjs.js'
+import { initNFTContract, deployJScontract, deployStandaloneContract, getSuggestedDepositForContract, isStandaloneMode, callStandaloneContract, createWalletConnection } from '../near/near.js';
 import { toggleIndeterminateProgress } from '../common/progressindicator.js';
-import { createStandalone } from '../compiler/standalone.js';
-import { bundle } from '../compiler/bundler.js';
 import html from './code-page.component.html.js';
 import css from './code-page.component.css.js';
 import { WASM_URLS, getContractSimulationInstance, loadContractWasmIntoSimulator } from '../compiler/jsinrust/contract-wasms.js';

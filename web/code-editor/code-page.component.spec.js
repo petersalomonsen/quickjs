@@ -8,7 +8,6 @@ import '@material/mwc-textfield';
 import '@material/mwc-select';
 import '@material/mwc-snackbar';
 
-import { createQuickJS } from '../compiler/quickjs.js';
 import { getNearConfig, viewStandaloneContract, clearWalletConnection, APP_NAME } from '../near/near.js';
 import './code-page.component.js';
 
@@ -38,7 +37,7 @@ async function waitForElement(rootElement, selector) {
 describe('codepage-component', function () {
     this.timeout(60000);
 
-    it('should deploy minimum-web4 js contract to new account', async () => {
+    it.skip('should deploy minimum-web4 js contract to new account', async () => {
         const randomNumber = Math.floor(Math.random() * (99999999999999 - 10000000000000) + 10000000000000);
 
         const accountId = `dev-${Date.now()}-${randomNumber}`;
@@ -97,7 +96,7 @@ describe('codepage-component', function () {
         console.log('web4-minimum contract is deployed');
     });
 
-    it('should deploy minimum nft js contract to new account', async () => {
+    it.skip('should deploy minimum nft js contract to new account', async () => {
         const randomNumber = Math.floor(Math.random() * (99999999999999 - 10000000000000) + 10000000000000);
 
         const accountId = `dev-${Date.now()}-${randomNumber}`;

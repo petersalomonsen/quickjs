@@ -1,4 +1,4 @@
-import 'https://cdn.jsdelivr.net/npm/near-api-js@2.1.3/dist/near-api-js.js';
+import nearApi from 'near-api-js';
 import { showLoginDialog } from './near.component.js';
 
 export const APP_NAME = 'js-in-rust';

@@ -1,5 +1,6 @@
 import './app.component.js';
 import { APP_NAME, LOGGED_IN_CONTRACT_NAME, clearWalletConnection, getNearConfig } from './near/near.js';
+import nearApi from 'near-api-js';
 
 describe('app-component', () => {
     it('should show the logout button if logged in', async () => {

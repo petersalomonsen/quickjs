@@ -1,16 +1,3 @@
-
-// Taken from https://github.com/vgrichina/fast-near/blob/main/utils/prepare-wasm.js
-
-// NOTE: Looks like nearcore preprocesses WASM it's own way, so this code tries to match
-// https://github.com/near/nearcore/blob/85563483db8f7655cbb45e856ba3fb99bbf463e3/runtime/near-vm-runner/src/prepare.rs#L143
-// Binary format is manipulated directly, as otherwise is super slow (seconds) using `@webassemblyjs/wasm-edit`
-// https://coinexsmartchain.medium.com/wasm-introduction-part-1-binary-format-57895d851580
-
-// NOTE: Looks like nearcore preprocesses WASM it's own way, so this code tries to match
-// https://github.com/near/nearcore/blob/85563483db8f7655cbb45e856ba3fb99bbf463e3/runtime/near-vm-runner/src/prepare.rs#L143
-// Binary format is manipulated directly, as otherwise is super slow (seconds) using `@webassemblyjs/wasm-edit`
-// https://coinexsmartchain.medium.com/wasm-introduction-part-1-binary-format-57895d851580
-
 function debug(...args) {
     // console.log('preparewasm', ...args);
 }
@@ -57,7 +44,7 @@ export function prepareWASM(inputBytes) {
         const length = decodeLEB128();
         const result = inputBytes.slice(offset, offset + length);
         offset += length;
-        return result.toString('utf8');
+        return new TextDecoder('utf8').decode(result);
     }
 
     function encodeLEB128(value) {
@@ -70,12 +57,23 @@ export function prepareWASM(inputBytes) {
             }
             result.push(byte);
         } while (value !== 0);
-        return Buffer.from(result);
+        return new Uint8Array(result);
     }
 
     function encodeString(value) {
-        const result = Buffer.from(value, 'utf8');
-        return Buffer.concat([encodeLEB128(result.length), result]);
+        const encoded = new TextEncoder().encode(value);
+        return new Uint8Array([...encodeLEB128(encoded.length), ...encoded]);
+    }
+
+    function concatUint8Arrays(arrays) {
+        let totalLength = arrays.reduce((sum, arr) => sum + arr.length, 0);
+        let result = new Uint8Array(totalLength);
+        let offset = 0;
+        for (let arr of arrays) {
+            result.set(arr, offset);
+            offset += arr.length;
+        }
+        return result;
     }
 
     do {
@@ -89,7 +87,7 @@ export function prepareWASM(inputBytes) {
         if (sectionId == 5) {
             // Memory section
             // Make sure it's empty and only imported memory is used
-            parts.push(Buffer.from([5, 1, 0]));
+            parts.push(new Uint8Array([5, 1, 0]));
         } else if (sectionId == 2) {
             // Import section
             const sectionParts = [];
@@ -134,24 +132,24 @@ export function prepareWASM(inputBytes) {
                 }
             }
 
-            const importMemory = Buffer.concat([
+            const importMemory = concatUint8Arrays([
                 encodeString('env'),
                 encodeString('memory'),
-                Buffer.from([2]), // Memory import
+                new Uint8Array([2]), // Memory import
                 // TODO: Check what values to use
-                Buffer.from([0]),
+                new Uint8Array([0]),
                 encodeLEB128(1),
             ]);
 
             sectionParts.push(importMemory);
 
-            const sectionData = Buffer.concat([
+            const sectionData = concatUint8Arrays([
                 encodeLEB128(sectionParts.length),
                 ...sectionParts,
             ]);
 
-            parts.push(Buffer.concat([
-                Buffer.from([2]), // Import section
+            parts.push(concatUint8Arrays([
+                new Uint8Array([2]), // Import section
                 encodeLEB128(sectionData.length),
                 sectionData
             ]));
@@ -173,13 +171,13 @@ export function prepareWASM(inputBytes) {
                 }
             }
 
-            const sectionData = Buffer.concat([
+            const sectionData = concatUint8Arrays([
                 encodeLEB128(sectionParts.length),
                 ...sectionParts,
             ]);
 
-            parts.push(Buffer.concat([
-                Buffer.from([7]), // Export section
+            parts.push(concatUint8Arrays([
+                new Uint8Array([7]), // Export section
                 encodeLEB128(sectionData.length),
                 sectionData
             ]));
@@ -190,5 +188,5 @@ export function prepareWASM(inputBytes) {
         offset = sectionEnd;
     } while (offset < inputBytes.length);
 
-    return Buffer.concat(parts);
+    return concatUint8Arrays(parts);
 }
