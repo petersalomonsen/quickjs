@@ -104,30 +104,3 @@ class AppComponent extends HTMLElement {
 }
 
 customElements.define('app-root', AppComponent);
-
-const registerServiceWorker = async () => {
-    if ("serviceWorker" in navigator) {
-        const serviceworkerscope = import.meta.url.substring(0, import.meta.url.lastIndexOf('/') + 1);
-        console.log('serviceworkerscope', serviceworkerscope);
-        try {
-            const registration = await navigator.serviceWorker.register("/serviceworker.js", {
-                scope: serviceworkerscope,
-            });
-            registration.onupdatefound = () => {
-                console.log('update available');
-            };
-            if (registration.installing) {
-                console.log("Service worker installing");
-            } else if (registration.waiting) {
-                console.log("Service worker installed");
-            } else if (registration.active) {
-                console.log("Service worker active");
-                await registration.update();
-            }
-
-        } catch (error) {
-            console.error(`Registration failed with ${error}`);
-        }
-    }
-};
-registerServiceWorker();

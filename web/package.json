@@ -3,11 +3,11 @@
     "scripts": {
         "start": "http-server -p 8082 .",
         "start-dist": "http-server -p 8082 ../dist",
-        "importmap": "node importmapgenerator.js",
+        "generateimportmap": "jspm link index.html -o index.html && jspm link index.html -o importmap.json",
         "dist": "rollup -c rollup.config.js",
         "createdevaccount": "node create-dev-account.js",
-        "test": "karma start --single-run --browsers ChromeHeadless karma.conf.cjs",
-        "test:watch": "karma start --browsers Chrome karma.conf.cjs"
+        "test": "wtr",
+        "test:watch": "wtr --watch"
     },
     "dependencies": {
         "@codemirror/autocomplete": "^6.4.2",
@@ -33,16 +33,14 @@
     "devDependencies": {
         "@jspm/generator": "^1.0.0-beta.31",
         "@rollup/plugin-node-resolve": "^15.0.1",
+        "@web/dev-server-import-maps": "^0.2.0",
         "@web/rollup-plugin-html": "^1.10.3",
         "@web/rollup-plugin-import-meta-assets": "^1.0.7",
-        "chai": "^4.3.6",
+        "@web/test-runner": "^0.18.0",
+        "@web/test-runner-playwright": "^0.11.0",
         "http-server": "^14.1.0",
-        "karma": "^6.3.19",
-        "karma-chai": "^0.1.0",
-        "karma-chrome-launcher": "^3.1.1",
-        "karma-mocha": "^2.0.1",
-        "mocha": "^10.2.0",
-        "near-api-js": "^2.1.3",
+        "jspm": "^3.2.0",
+        "near-api-js": "^4.0.3",
         "rollup": "^3.18.0",
         "rollup-plugin-terser": "^7.0.2"
     }

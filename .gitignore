@@ -7,3 +7,6 @@ emsdk
 standalonejstest.testnet.txt
 dist
 .DS_Store
+quickjs-2024-01-13*
+wabt-*
+binaryen-*

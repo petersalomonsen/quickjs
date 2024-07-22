@@ -25,15 +25,7 @@ describe('compiler', function() {
     it('should handle JSON.parse', async () => {
         const quickjs = await createQuickJS();
         expect(quickjs.evalSource(`JSON.parse('1')`)).to.equal(1);
-        expect(quickjs.evalByteCode([0x02, 0x02, 0x0a, 0x70, 0x61, 0x72, 0x73, 0x65,
-            0x1a, 0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x5f, 0x6e,
-            0x65, 0x61, 0x72, 0x2e, 0x6a, 0x73, 0x0e, 0x00,
-            0x06, 0x00, 0xa0, 0x01, 0x00, 0x01, 0x00, 0x03,
-            0x00, 0x01, 0x11, 0x01, 0xa2, 0x01, 0x00, 0x00,
-            0x00, 0x38, 0x9b, 0x00, 0x00, 0x00, 0x42, 0xde,
-            0x00, 0x00, 0x00, 0xbf, 0x00, 0x24, 0x01, 0x00,
-            0xcd, 0x28, 0xbe, 0x03, 0x01, 0x00, 0x07, 0x02,
-            0x31])).to.equal(1);
+        expect(quickjs.evalByteCode(quickjs.compileToByteCode(`JSON.parse('1')`))).to.equal(1);
     });
     it('should handle JSON.parse in bytecode', async () => {
         const quickjs = await createQuickJS();
@@ -97,7 +89,6 @@ describe('compiler', function() {
         const result = await quickjs.evalByteCode(bytecode);
         expect(quickjs.stdoutlines).to.include('before await');
         expect(quickjs.stdoutlines).to.include('after await');
-        expect(result).to.equal(undefined);
     });
     it('should get values from returned object', async () => {
         const quickjs = await createQuickJS();

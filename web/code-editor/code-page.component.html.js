@@ -14,7 +14,6 @@ export default /*html*/ `
 <p>
   <mwc-button raised id="savebutton" icon="save">Save</mwc-button>
   <mwc-button raised id="deploybutton">Deploy</mwc-button>
-  <mwc-button raised id="downloadbytecodebutton" icon="download">Download bytecode</mwc-button>
 </p>
 
 <h3>Simulation</h3>

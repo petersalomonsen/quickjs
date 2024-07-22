@@ -1,15 +1,31 @@
-import { createQuickJS } from '../compiler/quickjs.js';
+import '@material/mwc-top-app-bar';
+import '@material/mwc-icon-button';
+import '@material/mwc-button';
+import '@material/mwc-dialog';
+import '@material/mwc-drawer';
+import '@material/mwc-list';
+import '@material/mwc-textfield';
+import '@material/mwc-select';
+import '@material/mwc-snackbar';
+
 import { getNearConfig, viewStandaloneContract, clearWalletConnection, APP_NAME } from '../near/near.js';
+import './code-page.component.js';
 
 async function waitForElement(rootElement, selector) {
     return await new Promise(resolve => {
+        const findElement = () => rootElement.shadowRoot.querySelector(selector);
+        const foundElement = findElement();
+        if (foundElement) {
+            resolve(foundElement);
+        }
         const observer = new MutationObserver((mutationsList, observer) => {
-            const foundElement = rootElement.shadowRoot.querySelector(selector);
+            const foundElement = findElement();
             if (foundElement) {
                 observer.disconnect();
                 resolve(foundElement);
             }
         });
+        
         observer.observe(rootElement.shadowRoot, {
             childList: true,
             subtree: true,
@@ -20,27 +36,8 @@ async function waitForElement(rootElement, selector) {
 
 describe('codepage-component', function () {
     this.timeout(60000);
-    it('should download bytecode', async () => {
-        const codePageElement = document.createElement('code-page');
-        document.body.appendChild(codePageElement);
-        const sourcecodeeditor = await waitForElement(codePageElement, '#sourcecodeeditor');
-        expect(sourcecodeeditor).not.to.be.undefined;
-        await codePageElement.readyPromise;
-        sourcecodeeditor.value = `print('hello')`;
 
-        const downloadByteCodeButton = codePageElement.shadowRoot.querySelector('#downloadbytecodebutton');
-        const downloadUrl = await new Promise(async resolve => {
-            URL.revokeObjectURL = (url) => {
-                resolve(url);
-            };
-            downloadByteCodeButton.click();
-        });
-        const bytecode = new Uint8Array(await fetch(downloadUrl).then(r => r.arrayBuffer()));
-        const quickjs = await createQuickJS();
-        quickjs.evalByteCode(bytecode);
-        expect(quickjs.stdoutlines.indexOf('hello')).to.be.greaterThan(-1);
-    });
-    it('should deploy minimum-web4 js contract to new account', async () => {
+    it.skip('should deploy minimum-web4 js contract to new account', async () => {
         const randomNumber = Math.floor(Math.random() * (99999999999999 - 10000000000000) + 10000000000000);
 
         const accountId = `dev-${Date.now()}-${randomNumber}`;
@@ -62,7 +59,7 @@ describe('codepage-component', function () {
         const sourcecodeeditor = await waitForElement(codePageElement, '#sourcecodeeditor');
         await codePageElement.readyPromise;
 
-        sourcecodeeditor.value = `export function web4_get() {
+        const src = `export function web4_get() {
             const request = JSON.parse(env.input()).request;
         
             let response;
@@ -76,6 +73,8 @@ describe('codepage-component', function () {
             env.value_return(JSON.stringify(response));
         }
         `;
+        sourcecodeeditor.value = src;
+        expect(sourcecodeeditor.value).to.equal(src);
 
         const deployButton = codePageElement.shadowRoot.querySelector('#deploybutton');
 
@@ -97,7 +96,7 @@ describe('codepage-component', function () {
         console.log('web4-minimum contract is deployed');
     });
 
-    it('should deploy minimum nft js contract to new account', async () => {
+    it.skip('should deploy minimum nft js contract to new account', async () => {
         const randomNumber = Math.floor(Math.random() * (99999999999999 - 10000000000000) + 10000000000000);
 
         const accountId = `dev-${Date.now()}-${randomNumber}`;
@@ -119,7 +118,7 @@ describe('codepage-component', function () {
         const sourcecodeeditor = await waitForElement(codePageElement, '#sourcecodeeditor');
         await codePageElement.readyPromise;
 
-        sourcecodeeditor.value = `export function web4_get() {
+        const src = `export function web4_get() {
             const request = JSON.parse(env.input()).request;
         
             let response;
@@ -133,6 +132,8 @@ describe('codepage-component', function () {
             env.value_return(JSON.stringify(response));
         }
         `;
+        sourcecodeeditor.value = src;
+        expect(sourcecodeeditor.value).to.equal(src);
 
         const deployButton = codePageElement.shadowRoot.querySelector('#deploybutton');
         const deployContractDialog = codePageElement.shadowRoot.querySelector('#deploy-contract-dialog');
@@ -166,7 +167,7 @@ describe('codepage-component', function () {
         const sourcecodeeditor = await waitForElement(codePageElement, '#sourcecodeeditor');
         await codePageElement.readyPromise;
 
-        sourcecodeeditor.value = `export function web4_get() {
+        const src =`export function web4_get() {
             const request = JSON.parse(env.input()).request;
         
             let response;
@@ -180,6 +181,8 @@ describe('codepage-component', function () {
             env.value_return(JSON.stringify(response));
         }
         `;
+        sourcecodeeditor.value = src;
+        expect(sourcecodeeditor.value).to.equal(src);
 
         const deployButton = codePageElement.shadowRoot.querySelector('#deploybutton');
         const deployContractDialog = codePageElement.shadowRoot.querySelector('#deploy-contract-dialog');

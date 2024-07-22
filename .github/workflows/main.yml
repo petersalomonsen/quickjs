@@ -14,22 +14,27 @@ jobs:
         run: |
           grep -rq --include '*.spec.js' \.only\( . && echo 'You have .only() in your tests!' && exit 1
           exit 0
-  chromeheadless:
-    name: Chrome headless
+  webtestrunner:
+    name: Web Test Runner
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Chrome headless
+      - name: Web Test Runner
         run: |
+          wget https://bellard.org/quickjs/quickjs-2024-01-13.tar.xz
+          tar -xf quickjs-2024-01-13.tar.xz
+          rm quickjs-2024-01-13.tar.xz
           git clone https://github.com/emscripten-core/emsdk.git
           cd emsdk
           ./emsdk install latest
           ./emsdk activate latest
           cd ..
           npm i -g wasm-opt
-          (cd wasmlib && source ../emsdk/emsdk_env.sh && ./build.sh)          
+          (cd wasmlib && source ../emsdk/emsdk_env.sh && ./build.sh)
           cd web
           yarn install
+          yarn playwright install
+          sudo yarn playwright install-deps
           yarn createdevaccount
           yarn test
   distbundle:

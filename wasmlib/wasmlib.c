@@ -1,5 +1,6 @@
 #include <emscripten.h>
 #include <stdint.h>
+#include <time.h>
 
 extern uint64_t js_get_property(uint64_t obj, const char *name);
 extern const char *js_get_string(uint64_t val);
@@ -8,6 +9,14 @@ extern uint64_t js_eval_bytecode(const char *buf, unsigned long buf_len);
 extern uint64_t js_load_bytecode(const char *buf, unsigned long buf_len);
 extern uint64_t js_call_function(uint64_t mod_obj, const char * function_name);
 extern unsigned long js_compile_to_bytecode(char *filename, char *source, unsigned long *buf_len, int module);
+
+void __secs_to_zone(long long secs, int *p_offset, int *p_dst, long *p_time, long *p_time_dst, long *t) {
+    // Minimal implementation
+    *p_offset = 0;
+    *p_dst = 0;
+    *p_time = secs;
+    *p_time_dst = secs;
+}
 
 int EMSCRIPTEN_KEEPALIVE eval_js_source(char *filename, char *source, int module)
 {

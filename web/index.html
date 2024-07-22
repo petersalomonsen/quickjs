@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
-        <style>
-            body {
-                margin: 0;
-                font-family: Roboto, sans-serif;
-            }
-        </style>
-    </head>
-    <body>
-        <app-root></app-root>
-    </body>
-    <script type="importmap">{
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: Roboto, sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <app-root></app-root>
+</body>
+<script async src="https://ga.jspm.io/npm:es-module-shims@1.10.0/dist/es-module-shims.js" crossorigin="anonymous"></script>
+<script type="importmap">
+{
   "imports": {
-    "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.7.1/dist/index.js",
-    "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.2.4/dist/index.js",
-    "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.1.9/dist/index.js",
+    "@codemirror/commands": "https://ga.jspm.io/npm:@codemirror/commands@6.3.3/dist/index.js",
+    "@codemirror/lang-javascript": "https://ga.jspm.io/npm:@codemirror/lang-javascript@6.2.1/dist/index.js",
     "@codemirror/lang-json": "https://ga.jspm.io/npm:@codemirror/lang-json@6.0.1/dist/index.js",
-    "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.7.0/dist/index.js",
-    "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.2.1/dist/index.js",
-    "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.12.0/dist/index.js",
+    "@codemirror/state": "https://ga.jspm.io/npm:@codemirror/state@6.4.0/dist/index.js",
+    "@codemirror/view": "https://ga.jspm.io/npm:@codemirror/view@6.23.0/dist/index.js",
     "@material/mwc-button": "https://ga.jspm.io/npm:@material/mwc-button@0.27.0/mwc-button.js",
     "@material/mwc-dialog": "https://ga.jspm.io/npm:@material/mwc-dialog@0.27.0/mwc-dialog.js",
     "@material/mwc-drawer": "https://ga.jspm.io/npm:@material/mwc-drawer@0.27.0/mwc-drawer.js",
@@ -33,24 +35,26 @@
     "@material/mwc-icon-button": "https://ga.jspm.io/npm:@material/mwc-icon-button@0.27.0/mwc-icon-button.js",
     "@material/mwc-linear-progress": "https://ga.jspm.io/npm:@material/mwc-linear-progress@0.27.0/mwc-linear-progress.js",
     "@material/mwc-list": "https://ga.jspm.io/npm:@material/mwc-list@0.27.0/mwc-list.js",
-    "@material/mwc-list/mwc-list-item": "https://ga.jspm.io/npm:@material/mwc-list@0.27.0/mwc-list-item.js",
     "@material/mwc-select": "https://ga.jspm.io/npm:@material/mwc-select@0.27.0/mwc-select.js",
     "@material/mwc-snackbar": "https://ga.jspm.io/npm:@material/mwc-snackbar@0.27.0/mwc-snackbar.js",
     "@material/mwc-textfield": "https://ga.jspm.io/npm:@material/mwc-textfield@0.27.0/mwc-textfield.js",
     "@material/mwc-top-app-bar": "https://ga.jspm.io/npm:@material/mwc-top-app-bar@0.27.0/mwc-top-app-bar.js",
-    "codemirror": "https://ga.jspm.io/npm:codemirror@6.0.1/dist/index.js"
+    "codemirror": "https://ga.jspm.io/npm:codemirror@6.0.1/dist/index.js",
+    "near-api-js": "https://ga.jspm.io/npm:near-api-js@4.0.3/lib/browser-index.js"
   },
   "scopes": {
     "https://ga.jspm.io/": {
-      "@codemirror/lint": "https://ga.jspm.io/npm:@codemirror/lint@6.1.1/dist/index.js",
-      "@codemirror/search": "https://ga.jspm.io/npm:@codemirror/search@6.2.3/dist/index.js",
-      "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.0.2/dist/index.js",
-      "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.1.3/dist/index.js",
-      "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.4.1/dist/index.es.js",
-      "@lezer/json": "https://ga.jspm.io/npm:@lezer/json@1.0.0/dist/index.es.js",
-      "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.3.3/dist/index.js",
-      "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/reactive-element.js",
-      "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.1/decorators/",
+      "@codemirror/autocomplete": "https://ga.jspm.io/npm:@codemirror/autocomplete@6.12.0/dist/index.js",
+      "@codemirror/language": "https://ga.jspm.io/npm:@codemirror/language@6.10.0/dist/index.js",
+      "@codemirror/lint": "https://ga.jspm.io/npm:@codemirror/lint@6.4.2/dist/index.js",
+      "@codemirror/search": "https://ga.jspm.io/npm:@codemirror/search@6.5.5/dist/index.js",
+      "@lezer/common": "https://ga.jspm.io/npm:@lezer/common@1.2.0/dist/index.js",
+      "@lezer/highlight": "https://ga.jspm.io/npm:@lezer/highlight@1.2.0/dist/index.js",
+      "@lezer/javascript": "https://ga.jspm.io/npm:@lezer/javascript@1.4.12/dist/index.js",
+      "@lezer/json": "https://ga.jspm.io/npm:@lezer/json@1.0.2/dist/index.js",
+      "@lezer/lr": "https://ga.jspm.io/npm:@lezer/lr@1.3.14/dist/index.js",
+      "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.3/development/reactive-element.js",
+      "@lit/reactive-element/decorators/": "https://ga.jspm.io/npm:@lit/reactive-element@1.6.3/development/decorators/",
       "@material/animation/animationframe": "https://ga.jspm.io/npm:@material/animation@14.0.0-canary.53b3cad2f.0/animationframe.js",
       "@material/base/foundation": "https://ga.jspm.io/npm:@material/base@14.0.0-canary.53b3cad2f.0/foundation.js",
       "@material/base/foundation.js": "https://ga.jspm.io/npm:@material/base@14.0.0-canary.53b3cad2f.0/foundation.js",
@@ -80,19 +84,117 @@
       "@material/snackbar/foundation.js": "https://ga.jspm.io/npm:@material/snackbar@14.0.0-canary.53b3cad2f.0/foundation.js",
       "@material/textfield/foundation.js": "https://ga.jspm.io/npm:@material/textfield@14.0.0-canary.53b3cad2f.0/foundation.js",
       "@material/top-app-bar/": "https://ga.jspm.io/npm:@material/top-app-bar@14.0.0-canary.53b3cad2f.0/",
+      "@near-js/accounts": "https://ga.jspm.io/npm:@near-js/accounts@1.2.1/lib/index.js",
+      "@near-js/crypto": "https://ga.jspm.io/npm:@near-js/crypto@1.2.4/lib/index.js",
+      "@near-js/keystores": "https://ga.jspm.io/npm:@near-js/keystores@0.0.12/lib/index.js",
+      "@near-js/keystores-browser": "https://ga.jspm.io/npm:@near-js/keystores-browser@0.0.12/lib/index.js",
+      "@near-js/providers": "https://ga.jspm.io/npm:@near-js/providers@0.2.2/lib/index.js",
+      "@near-js/signers": "https://ga.jspm.io/npm:@near-js/signers@0.1.4/lib/index.js",
+      "@near-js/transactions": "https://ga.jspm.io/npm:@near-js/transactions@1.2.2/lib/index.js",
+      "@near-js/types": "https://ga.jspm.io/npm:@near-js/types@0.2.1/lib/index.js",
+      "@near-js/utils": "https://ga.jspm.io/npm:@near-js/utils@0.2.2/lib/index.js",
+      "@near-js/wallet-account": "https://ga.jspm.io/npm:@near-js/wallet-account@1.2.2/lib/index.js",
+      "@noble/curves/ed25519": "https://ga.jspm.io/npm:@noble/curves@1.2.0/ed25519.js",
+      "@noble/hashes/crypto": "https://ga.jspm.io/npm:@noble/hashes@1.3.3/crypto.js",
+      "@noble/hashes/sha256": "https://ga.jspm.io/npm:@noble/hashes@1.3.3/sha256.js",
+      "@noble/hashes/sha512": "https://ga.jspm.io/npm:@noble/hashes@1.3.2/sha512.js",
+      "@noble/hashes/utils": "https://ga.jspm.io/npm:@noble/hashes@1.3.2/utils.js",
+      "base-x": "https://ga.jspm.io/npm:base-x@2.0.6/index.js",
       "blocking-elements": "https://ga.jspm.io/npm:blocking-elements@0.1.1/dist/blocking-elements.js",
-      "crelt": "https://ga.jspm.io/npm:crelt@1.0.5/index.es.js",
-      "lit": "https://ga.jspm.io/npm:lit@2.6.1/index.js",
-      "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.2.2/lit-element.js",
-      "lit-html": "https://ga.jspm.io/npm:lit-html@2.6.1/lit-html.js",
-      "lit-html/": "https://ga.jspm.io/npm:lit-html@2.6.1/",
-      "lit/": "https://ga.jspm.io/npm:lit@2.6.1/",
-      "style-mod": "https://ga.jspm.io/npm:style-mod@4.0.0/src/style-mod.js",
-      "tslib": "https://ga.jspm.io/npm:tslib@2.5.0/tslib.es6.js",
-      "w3c-keyname": "https://ga.jspm.io/npm:w3c-keyname@2.2.6/index.es.js",
-      "wicg-inert": "https://ga.jspm.io/npm:wicg-inert@3.1.2/dist/inert.esm.js"
+      "borsh": "https://ga.jspm.io/npm:borsh@1.0.0/lib/cjs/index.js",
+      "bs58": "https://ga.jspm.io/npm:bs58@4.0.0/index.js",
+      "buffer": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/buffer.js",
+      "crelt": "https://ga.jspm.io/npm:crelt@1.0.6/index.js",
+      "crypto": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/crypto.js",
+      "depd": "https://ga.jspm.io/npm:depd@2.0.0/lib/browser/index.js",
+      "generate-function": "https://ga.jspm.io/npm:generate-function@2.3.1/index.js",
+      "generate-object-property": "https://ga.jspm.io/npm:generate-object-property@1.2.0/index.js",
+      "http": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/http.js",
+      "http-errors": "https://ga.jspm.io/npm:http-errors@1.7.2/index.js",
+      "https": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/https.js",
+      "inherits": "https://ga.jspm.io/npm:inherits@2.0.3/inherits_browser.js",
+      "is-my-ip-valid": "https://ga.jspm.io/npm:is-my-ip-valid@1.0.1/index.js",
+      "is-my-json-valid": "https://ga.jspm.io/npm:is-my-json-valid@2.20.6/index.js",
+      "is-property": "https://ga.jspm.io/npm:is-property@1.0.2/is-property.js",
+      "jsonpointer": "https://ga.jspm.io/npm:jsonpointer@5.0.1/jsonpointer.js",
+      "lit": "https://ga.jspm.io/npm:lit@2.8.0/index.js",
+      "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.3.3/development/lit-element.js",
+      "lit-html": "https://ga.jspm.io/npm:lit-html@2.8.0/development/lit-html.js",
+      "lit-html/": "https://ga.jspm.io/npm:lit-html@2.8.0/development/",
+      "lit/": "https://ga.jspm.io/npm:lit@2.8.0/",
+      "lru_map": "https://ga.jspm.io/npm:lru_map@0.4.1/dist/lru.js",
+      "mustache": "https://ga.jspm.io/npm:mustache@4.0.0/mustache.js",
+      "near-abi": "https://ga.jspm.io/npm:near-abi@0.1.1/lib/index.js",
+      "node-fetch": "https://ga.jspm.io/npm:node-fetch@2.6.7/browser.js",
+      "process": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/process.js",
+      "randombytes": "https://ga.jspm.io/npm:randombytes@2.1.0/browser.js",
+      "safe-buffer": "https://ga.jspm.io/npm:safe-buffer@5.2.1/index.js",
+      "setprototypeof": "https://ga.jspm.io/npm:setprototypeof@1.1.1/index.js",
+      "statuses": "https://ga.jspm.io/npm:statuses@1.5.0/dev.index.js",
+      "style-mod": "https://ga.jspm.io/npm:style-mod@4.1.0/src/style-mod.js",
+      "toidentifier": "https://ga.jspm.io/npm:toidentifier@1.0.0/index.js",
+      "tslib": "https://ga.jspm.io/npm:tslib@2.6.2/tslib.es6.mjs",
+      "util": "https://ga.jspm.io/npm:@jspm/core@2.0.1/nodelibs/browser/util.js",
+      "w3c-keyname": "https://ga.jspm.io/npm:w3c-keyname@2.2.8/index.js",
+      "wicg-inert": "https://ga.jspm.io/npm:wicg-inert@3.1.2/dist/inert.esm.js",
+      "xtend": "https://ga.jspm.io/npm:xtend@4.0.2/immutable.js"
+    },
+    "https://ga.jspm.io/npm:@near-js/crypto@1.2.4/_/HcaMPL-t.js": {
+      "@noble/curves/ed25519": "https://ga.jspm.io/npm:@noble/curves@1.2.0/esm/ed25519.js"
+    },
+    "https://ga.jspm.io/npm:@near-js/crypto@1.2.4/_/LX1h3mee.js": {
+      "@noble/curves/ed25519": "https://ga.jspm.io/npm:@noble/curves@1.2.0/esm/ed25519.js"
+    },
+    "https://ga.jspm.io/npm:@noble/curves@1.2.0/esm/ed25519.js": {
+      "@noble/hashes/sha512": "https://ga.jspm.io/npm:@noble/hashes@1.3.2/esm/sha512.js",
+      "@noble/hashes/utils": "https://ga.jspm.io/npm:@noble/hashes@1.3.2/esm/utils.js"
+    },
+    "https://ga.jspm.io/npm:@noble/hashes@1.3.2/": {
+      "@noble/hashes/crypto": "https://ga.jspm.io/npm:@noble/hashes@1.3.2/crypto.js"
+    },
+    "https://ga.jspm.io/npm:@noble/hashes@1.3.2/esm/_sha2.js": {
+      "@noble/hashes/crypto": "https://ga.jspm.io/npm:@noble/hashes@1.3.2/esm/crypto.js"
+    },
+    "https://ga.jspm.io/npm:@noble/hashes@1.3.2/esm/sha512.js": {
+      "@noble/hashes/crypto": "https://ga.jspm.io/npm:@noble/hashes@1.3.2/esm/crypto.js"
+    },
+    "https://ga.jspm.io/npm:@noble/hashes@1.3.2/esm/utils.js": {
+      "@noble/hashes/crypto": "https://ga.jspm.io/npm:@noble/hashes@1.3.2/esm/crypto.js"
+    },
+    "https://ga.jspm.io/npm:http-errors@1.7.2/": {
+      "depd": "https://ga.jspm.io/npm:depd@1.1.2/lib/browser/index.js"
     }
   }
-}</script>
-    <script type="module" src="app.component.js"></script>
+}
+</script>
+<script type="module" src="app.component.js"></script>
+<script type="module">
+  const registerServiceWorker = async () => {
+    if ("serviceWorker" in navigator) {
+      const serviceworkerscope = import.meta.url.substring(0, import.meta.url.lastIndexOf('/') + 1);
+      console.log('serviceworkerscope', serviceworkerscope);
+      try {
+        const registration = await navigator.serviceWorker.register("/serviceworker.js", {
+          scope: serviceworkerscope,
+        });
+        registration.onupdatefound = () => {
+          console.log('update available');
+        };
+        if (registration.installing) {
+          console.log("Service worker installing");
+        } else if (registration.waiting) {
+          console.log("Service worker installed");
+        } else if (registration.active) {
+          console.log("Service worker active");
+          await registration.update();
+        }
+
+      } catch (error) {
+        console.error(`Registration failed with ${error}`);
+      }
+    }
+  };
+  registerServiceWorker();
+</script>
+
 </html>

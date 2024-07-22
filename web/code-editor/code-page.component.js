@@ -1,10 +1,7 @@
 import './code-editor.component.js';
 import './args-editor.component.js';
-import { initNFTContract, deployJScontract, deployStandaloneContract, getSuggestedDepositForContract, isStandaloneMode, callStandaloneContract, createWalletConnection, byteArrayToBase64 } from '../near/near.js';
-import { createQuickJS } from '../compiler/quickjs.js'
+import { initNFTContract, deployJScontract, deployStandaloneContract, getSuggestedDepositForContract, isStandaloneMode, callStandaloneContract, createWalletConnection } from '../near/near.js';
 import { toggleIndeterminateProgress } from '../common/progressindicator.js';
-import { createStandalone } from '../compiler/standalone.js';
-import { bundle } from '../compiler/bundler.js';
 import html from './code-page.component.html.js';
 import css from './code-page.component.css.js';
 import { WASM_URLS, getContractSimulationInstance, loadContractWasmIntoSimulator } from '../compiler/jsinrust/contract-wasms.js';
@@ -110,7 +107,6 @@ export function nft_payout() {
         const savebutton = this.shadowRoot.getElementById('savebutton');
         savebutton.addEventListener('click', () => this.save());
 
-        const compileByteCode = async () => (await createQuickJS()).compileToByteCode(await bundle(sourcecodeeditor.value, this.bundletypeselect.value), 'contract');
         const deploybutton = this.shadowRoot.getElementById('deploybutton');
         this.bundletypeselect = this.shadowRoot.getElementById('bundletypeselect');
         await new Promise(r => setTimeout(() => r(), 100));
@@ -132,20 +128,20 @@ export function nft_payout() {
             }) == 'deploy') {
                 toggleIndeterminateProgress(true);
                 await this.save();
-                const bytecode = await compileByteCode();
-                let deployMethodName = 'deploy_js_contract';
+                const source = sourcecodeeditor.value;
+                let deployMethodName = 'post_javascript';
                 const deployContract = async (deposit = undefined) => {
                     let retryDeploying = true;
                     while (retryDeploying) {
                         try {
                             console.log('deploy contract with deposit', deposit);
-                            await deployJScontract(bytecode, deposit, deployMethodName);
+                            await deployJScontract(source, deposit, deployMethodName);
                             this.shadowRoot.querySelector('#successDeploySnackbar').show();
                             retryDeploying = false;
                         } catch (e) {
                             console.error(e);
                             if (e.message.indexOf('insufficient deposit for storage') >= 0) {
-                                await deployContract(getSuggestedDepositForContract(bytecode.length));
+                                await deployContract(getSuggestedDepositForContract(source.length));
                                 toggleIndeterminateProgress(false);
                             } else if (
                                 e.message.indexOf('Contract method is not found') >= 0 ||
@@ -171,31 +167,9 @@ export function nft_payout() {
                     toggleIndeterminateProgress(false);
                 };
 
-                if (this.bundletypeselect.value == 'nearapi') {
-                    if (await isStandaloneMode()) {
-                        const standaloneWasmBytes = await createStandalone(bytecode, this.exportedMethodNames);
-                        await deployStandaloneContract(standaloneWasmBytes);
-                        toggleIndeterminateProgress(false);
-                    } else {
-                        await deployContract();
-                    }
-                } else {
-                    deployMethodName = 'post_quickjs_bytecode';
-                    await deployContract();
-                }
+                deployMethodName = 'post_javascript';
+                await deployContract();
             }
-        });
-        const downloadbytecodebutton = this.shadowRoot.getElementById('downloadbytecodebutton');
-        downloadbytecodebutton.addEventListener('click', async () => {
-            const bytecode = await compileByteCode();
-
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(new Blob([bytecode], { type: 'application/octet-stream' }));
-            link.download = 'quickjsbytecode.bin';
-            document.documentElement.appendChild(link);
-            link.click();
-            document.documentElement.removeChild(link);
-            URL.revokeObjectURL(link.href);
         });
 
         const simulatebutton = this.shadowRoot.getElementById('simulatebutton');
@@ -268,14 +242,11 @@ ${nearenv.latest_return_value}
                 methodselect.appendChild(option);
             });
 
-            const quickjs = await createQuickJS();
-            const bytecode = quickjs.compileToByteCode(await bundle(source, this.bundletypeselect.value), 'contractmodule');
-
             nearenv.set_args({
-                bytecodebase64: await byteArrayToBase64(bytecode)
+                javascript: source
             });
             nearenv.set_attached_deposit(0n);
-            simulationInstance.post_quickjs_bytecode();
+            simulationInstance.post_javascript();
 
             this.simulationOutputArea.innerHTML = '';
             if (this.simulationContext) {

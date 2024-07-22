@@ -35,7 +35,7 @@ class QuickJS {
                 this.stderrlines.push(data.join(' '));
                 console.error(...data);
             }
-            const wasm = await fetch(new URL('https://ipfs.web4.near.page/ipfs/bafkreifs67a5kuzcz4ldka23wrqjnmcb7hhnc45ktnyjiorcohrkxdxrd4?filename=jseval-287b734b.wasm')).then(r => r.arrayBuffer());
+            const wasm = await fetch(new URL('jseval.wasm', import.meta.url)).then(r => r.arrayBuffer());
             const mod = (await WebAssembly.instantiate(wasm, {
                 "wasi_snapshot_preview1": this.wasi
             })).instance;

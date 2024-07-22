@@ -1,4 +1,4 @@
-import 'https://cdn.jsdelivr.net/npm/near-api-js@2.1.3/dist/near-api-js.js';
+import nearApi from 'near-api-js';
 import { showLoginDialog } from './near.component.js';
 
 export const APP_NAME = 'js-in-rust';
@@ -84,7 +84,7 @@ export function getSuggestedDepositForContract(contractbytelength) {
     return nearApi.utils.format.parseNearAmount(`${contractbytelength / 1000}`);
 }
 
-export async function deployJScontract(contractbytes, deposit = undefined, deployMethodName = 'deploy_js_contract') {
+export async function deployJScontract(javascriptsource, deposit = undefined, deployMethodName = 'post_javascript') {
     const wc = await createWalletConnection();
     if (await checkSignedin()) {
         if (deployMethodName == 'deploy_js_contract') {
@@ -99,7 +99,7 @@ export async function deployJScontract(contractbytes, deposit = undefined, deplo
                 contractId: nearconfig.contractName,
                 methodName: deployMethodName,
                 args: {
-                    "bytecodebase64": await byteArrayToBase64(contractbytes)
+                    "javascript": javascriptsource
                 }, gas: '300000000000000', attachedDeposit: deposit
             });
         }

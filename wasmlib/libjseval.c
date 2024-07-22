@@ -130,20 +130,29 @@ JSValue js_eval_bytecode(const uint8_t *buf, size_t buf_len)
 JSValue js_load_bytecode(const uint8_t *buf, size_t buf_len)
 {
     JSValue module_obj;
-    JSModuleDef *m;
-
+    JSAtom module_name;
+    JSValue load_module_promise;
+    const char * module_name_str;
     create_runtime();
 
     module_obj = JS_ReadObject(ctx, buf, buf_len, JS_READ_OBJ_BYTECODE);
     JS_EvalFunction(ctx, module_obj);
-    return JS_GetModule_NS(ctx, JS_VALUE_GET_PTR(module_obj));
+    module_name = JS_GetModuleName(ctx, JS_VALUE_GET_PTR(module_obj));
+    module_name_str = JS_AtomToCString(ctx, module_name);
+
+    printf("Module name is %s\n", module_name_str);
+    load_module_promise = JS_LoadModule(ctx, "", module_name_str);
+    js_std_loop_no_os(ctx);
+    JS_FreeCString(ctx, module_name_str);
+    
+    return JS_PromiseResult(ctx, load_module_promise);
 }
 
 JSValue js_call_function(JSValue mod_obj, const char *function_name)
 {
     JSValue fun_obj, val;
 
-    fun_obj = JS_GetProperty(ctx, mod_obj, JS_NewAtom(ctx, function_name));
+    fun_obj = JS_GetPropertyStr(ctx, mod_obj, function_name);
     val = JS_Call(ctx, fun_obj, mod_obj, 0, NULL);
     if (JS_IsException(val))
     {

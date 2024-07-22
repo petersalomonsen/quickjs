@@ -1,3 +1,4 @@
+import '../app.component.js';
 import { LOGGED_IN_CONTRACT_NAME, APP_NAME, byteArrayToBase64, checkSignedin, clearWalletConnection, createFunctionCallTransaction, createWalletConnection, getNearConfig, getProvider } from "./near.js";
 
 describe('near', function () {
